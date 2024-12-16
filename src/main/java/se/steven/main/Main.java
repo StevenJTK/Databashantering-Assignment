@@ -8,11 +8,12 @@ public class Main {
     public static void main(String[] args) throws SQLException {
 
     JDBCUtil util = new JDBCUtil();
-    Operations op = new Operations();
+
+    WorkDAOImpl op = new WorkDAOImpl();
 
     util.getDataBaseProductName();
 
-    op.updateRole();
+    op.insertRole();
 
 
 

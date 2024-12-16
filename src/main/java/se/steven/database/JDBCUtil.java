@@ -1,6 +1,9 @@
 package se.steven.database;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.*;
+import java.util.Properties;
 
 public class JDBCUtil {
 
@@ -12,11 +15,11 @@ public class JDBCUtil {
         // Driver registered
         DriverManager.registerDriver(hsqlDriver);
 
-        String dbURL = "jdbc:hsqldb:hsql://localhost/jdbclab";
+        String dbURL = properties.getProperty("db.URL");
 
-        String userID = "sa";
+        String userID = properties.getProperty("db.user");
 
-        String password = "";
+        String password = properties.getProperty("db.password");
 
         // Allows connection to drivermanager to access database
         Connection conn = DriverManager.getConnection(dbURL, userID, password);
@@ -24,6 +27,20 @@ public class JDBCUtil {
         conn.setAutoCommit(false);
 
         return conn;
+    }
+
+    private static Properties properties = new Properties();
+
+    static {
+        try(InputStream input = JDBCUtil.class.getClassLoader().getResourceAsStream("application.properties")) {
+            if(input == null) {
+                throw new IOException("Could not find application.properties");
+            }
+                properties.load(input);
+        }   catch (IOException e) {
+            e.printStackTrace();
+            throw new ExceptionInInitializerError("Failed to load database properties.");
+        }
     }
 
 
