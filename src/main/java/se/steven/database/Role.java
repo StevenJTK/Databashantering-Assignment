@@ -29,24 +29,32 @@ public class Role {
         this.creation_date = creation_date;
     }
 
+    public Role(String title) {
+        this.title = title;
+    }
 
     public Integer getRole_id() {
+
         return role_id;
     }
 
     public String getTitle() {
+
         return title;
     }
 
     public String getDescription() {
+
         return description;
     }
 
     public double getSalary() {
+
         return salary;
     }
 
     public java.sql.Date getCreation_date() {
+
         return creation_date;
     }
 

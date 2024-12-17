@@ -1,45 +1,52 @@
 package se.steven.database;
 
-import org.junit.Test;
-
-import javax.xml.transform.Result;
 import java.sql.*;
-import se.steven.database.WorkDAOImpl.*;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 
 class WorkDAOImplTest {
 
 
-    WorkDAOImpl dao = new WorkDAOImpl();
+
+   // JDBCUtil util = new JDBCUtil();
 
     @org.junit.jupiter.api.Test
     public void testInsertWorkRole() throws SQLException {
+        WorkDAOImpl dao = new WorkDAOImpl();
 
-        dao.insertRole();
+        //skapa instans av ROle
 
-        Statement stmt = null;
-        Connection conn = null;
-        ResultSet rs = null;
+        //sätta in deenna instans med metod i DAO
 
-        try {
-            conn = JDBCUtil.getConnection();
-            stmt = conn.createStatement();
-            stmt.execute("SELECT title FROM work_role WHERE title = '3D Artist'");
+        //hämta all ROles met metod i DAO - en lista returneras
 
-            rs = stmt.getResultSet();
+        //använd assertEquals för att verifiera att listans storlek är 1
 
-            if (rs.next()) {
 
-                assertEquals("3D Artist", rs.getString("title"));
-            }
-        } catch (SQLException e) {
-            throw e;
-        } finally {
-            JDBCUtil.closeResultSet(rs);
-            JDBCUtil.closeStatement(stmt);
-            JDBCUtil.closeConnection(conn);
-        }
+//
+//        //   dao.insertRole();
+//        Statement stmt = null;
+//        Connection conn = null;
+//        ResultSet rs = null;
+//
+//        try {
+//            conn = JDBCUtil.getConnection();
+//            stmt = conn.createStatement();
+//            stmt.execute("SELECT title FROM work_role WHERE title = 'Fullstack Developer'");
+//
+//            rs = stmt.getResultSet();
+//
+//            assertTrue(rs.next());
+//
+//            assertEquals("Fireman", rs.getString("title"));
+//
+//        } catch (SQLException e) {
+//            throw e;
+//        } finally {
+//
+//            JDBCUtil.closeResultSet(rs);
+//            JDBCUtil.closeStatement(stmt);
+//            JDBCUtil.closeConnection(conn);
+//        }
     }
 }

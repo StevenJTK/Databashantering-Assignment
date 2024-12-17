@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="SqlDialectMappings">
-    <file url="file://$PROJECT_DIR$/src/main/java/se/steven/database/Operations.java" dialect="GenericSQL" />
-    <file url="file://$PROJECT_DIR$/src/test/resources/schema.sql" dialect="GenericSQL" />
+    <file url="file://$APPLICATION_CONFIG_DIR$/consoles/db/ef30c701-6451-4145-b05b-2ea40556404f/console.sql" dialect="HSQLDB" />
   </component>
 </project>

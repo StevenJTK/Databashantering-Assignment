@@ -29,20 +29,6 @@ public class JDBCUtil {
         return conn;
     }
 
-    private static Properties properties = new Properties();
-
-    static {
-        try(InputStream input = JDBCUtil.class.getClassLoader().getResourceAsStream("application.properties")) {
-            if(input == null) {
-                throw new IOException("Could not find application.properties");
-            }
-                properties.load(input);
-        }   catch (IOException e) {
-            e.printStackTrace();
-            throw new ExceptionInInitializerError("Failed to load database properties.");
-        }
-    }
-
 
     public static void closeConnection(Connection conn) {
         try {
@@ -116,4 +102,22 @@ public class JDBCUtil {
         }
             return null;
     }
+
+    private static Properties properties = new Properties();
+
+    static {
+        try(InputStream input = JDBCUtil.class.getClassLoader().getResourceAsStream("application.properties")) {
+            if(input == null) {
+                throw new IOException("Could not find application.properties");
+            }
+            properties.load(input);
+        }   catch (IOException e) {
+            e.printStackTrace();
+            throw new ExceptionInInitializerError("Failed to load database properties.");
+        }
+    }
+
+
+
+
 }

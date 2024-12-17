@@ -13,7 +13,7 @@ public class Main {
 
     util.getDataBaseProductName();
 
-    op.insertRole();
+    op.fetchAllRoles();
 
 
 
