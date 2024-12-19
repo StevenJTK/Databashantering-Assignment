@@ -33,6 +33,11 @@ public class Role {
         this.title = title;
     }
 
+    public Role() {
+
+    }
+
+
     public Integer getRole_id() {
 
         return role_id;

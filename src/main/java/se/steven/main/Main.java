@@ -13,6 +13,8 @@ public class Main {
 
     util.getDataBaseProductName();
 
+    Role role = new Role();
+
     op.fetchAllRoles();
 
 

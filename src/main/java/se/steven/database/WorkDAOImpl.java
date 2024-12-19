@@ -21,10 +21,10 @@ public class WorkDAOImpl implements WorkDAO {
             String sql = "INSERT INTO work_role (title, description, salary, creation_date) VALUES (?,?,?,?)";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, 1);
-            pstmt.setString(1,"Teacher");
-            pstmt.setString(2,"Teaches students");
-            pstmt.setDouble(3,50000.0);
-            pstmt.setDate(4, Date.valueOf("2000-1-17"));
+            pstmt.setString(1,"Michael");
+            pstmt.setString(2,"Jackson");
+            pstmt.setDouble(3,500000.00);
+            pstmt.setDate(4, Date.valueOf("1985-1-17"));
 
             pstmt.executeUpdate();
             pstmt.close();
@@ -47,7 +47,6 @@ public class WorkDAOImpl implements WorkDAO {
 
     @Override
     public List<String> fetchAllRoles() throws SQLException {
-        //skapa tom lista som bara innehåller Role, det ska vara en ArrayList
 
         List<String> roles = new ArrayList<String>();
 
@@ -66,10 +65,6 @@ public class WorkDAOImpl implements WorkDAO {
             while (rs.next()) {
                 roles.add(rs.getString("title"));
                 System.out.println(rs.getString("title"));
-
-                //skapa ny instans av Role här
-
-                //lägg denna nya instans till listan med Roles
             }
 
         }   catch (SQLException e) {
@@ -123,36 +118,43 @@ public class WorkDAOImpl implements WorkDAO {
 
     @Override
     public void updateRole(int roleId) throws SQLException {
+
         Connection conn = null;
-        Statement stmt = null;
+        PreparedStatement pstmt = null;
         ResultSet rs = null;
 
         try {
             conn = JDBCUtil.getConnection();
-            stmt = conn.createStatement();
+
 
             String sql = "UPDATE work_role SET title = ?, description = ?, salary = ?, creation_date = ? WHERE role_id = ?";
-            PreparedStatement pstmt = conn.prepareStatement(sql);
 
-            pstmt.setInt(5, 5);
-            pstmt.setString(1, "Java Developer");
-            pstmt.setString(2, "Programs in Java");
-            pstmt.setDouble(3, 90000.0);
-            pstmt.setDate(4, Date.valueOf("2000-04-02"));
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, "Taylor");
+            pstmt.setString(2, "Swift");
+            pstmt.setDouble(3, 50000000.00);
+            pstmt.setDate(4, Date.valueOf("1995-1-17"));
+            pstmt.setInt(5, roleId);
+
             pstmt.executeUpdate();
             pstmt.close();
             conn.commit();
 
-            String query = "SELECT * FROM work_role";
-
-            rs = stmt.executeQuery(query);
+            String query = "SELECT * FROM work_role WHERE role_id=?";
+            pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, roleId);
+            rs = pstmt.executeQuery();
 
             while(rs.next()) {
-                System.out.println("Role ID:" + rs.getInt("role_id"));
-                System.out.println("Title: + " + rs.getString("title"));
-                System.out.println("Description: " + rs.getString("description"));
-                System.out.println("Salary: " + rs.getDouble("salary"));
-                System.out.println("Creation date: " + rs.getDate("creation_date"));
+                String title = rs.getString("title");
+                String description = rs.getString("description");
+                double salary = rs.getDouble("salary");
+                Date creationDate = rs.getDate("creation_date");
+
+                System.out.println(title);
+                System.out.println(description);
+                System.out.println(salary);
+                System.out.println(creationDate);
             }
 
         }   catch (SQLException e) {
@@ -162,7 +164,7 @@ public class WorkDAOImpl implements WorkDAO {
 
         }   finally {
             JDBCUtil.closeResultSet(rs);
-            JDBCUtil.closeStatement(stmt);
+            JDBCUtil.closeStatement(pstmt);
             JDBCUtil.closeConnection(conn);
         }
     }
@@ -179,7 +181,7 @@ public class WorkDAOImpl implements WorkDAO {
 
             String sql = "DELETE FROM work_role WHERE role_id = ?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1,6);
+            pstmt.setInt(1,roleId);
             pstmt.executeUpdate();
             pstmt.close();
 

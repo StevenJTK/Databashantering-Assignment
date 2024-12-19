@@ -1,52 +1,25 @@
 package se.steven.database;
 
 import java.sql.*;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 
 class WorkDAOImplTest {
 
 
-
-   // JDBCUtil util = new JDBCUtil();
-
     @org.junit.jupiter.api.Test
     public void testInsertWorkRole() throws SQLException {
         WorkDAOImpl dao = new WorkDAOImpl();
 
-        //skapa instans av ROle
+        Role role = new Role();
 
-        //sätta in deenna instans med metod i DAO
+        dao.insertRole(role);
 
-        //hämta all ROles met metod i DAO - en lista returneras
+        List<String> roles = dao.fetchAllRoles();
 
-        //använd assertEquals för att verifiera att listans storlek är 1
+        assertEquals(1, roles.size());
 
-
-//
-//        //   dao.insertRole();
-//        Statement stmt = null;
-//        Connection conn = null;
-//        ResultSet rs = null;
-//
-//        try {
-//            conn = JDBCUtil.getConnection();
-//            stmt = conn.createStatement();
-//            stmt.execute("SELECT title FROM work_role WHERE title = 'Fullstack Developer'");
-//
-//            rs = stmt.getResultSet();
-//
-//            assertTrue(rs.next());
-//
-//            assertEquals("Fireman", rs.getString("title"));
-//
-//        } catch (SQLException e) {
-//            throw e;
-//        } finally {
-//
-//            JDBCUtil.closeResultSet(rs);
-//            JDBCUtil.closeStatement(stmt);
-//            JDBCUtil.closeConnection(conn);
-//        }
     }
 }
