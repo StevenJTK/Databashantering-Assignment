@@ -15,7 +15,7 @@ public class Main {
 
     Role role = new Role();
 
-    op.fetchAllRoles();
+    op.insertRole(role);
 
 
 

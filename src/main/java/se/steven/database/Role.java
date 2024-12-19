@@ -11,24 +11,6 @@ public class Role {
     private java.sql.Date creation_date = java.sql.Date.valueOf("1998-04-02");
 
 
-    // Constructors
-
-    public Role(Integer role_id, String title, String description, double salary, java.sql.Date creation_date) {
-        this.role_id = role_id;
-        this.title = title;
-        this.description = description;
-        this.salary = salary;
-        this.creation_date = creation_date;
-    }
-
-
-    public Role(String title, String description, double salary, java.sql.Date creation_date) {
-        this.title = title;
-        this.description = description;
-        this.salary = salary;
-        this.creation_date = creation_date;
-    }
-
     public Role(String title) {
         this.title = title;
     }
