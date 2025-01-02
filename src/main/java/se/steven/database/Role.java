@@ -1,6 +1,7 @@
 package se.steven.database;
 
-import java.util.Date;
+import java.sql.Date;
+
 
 public class Role {
 
@@ -8,15 +9,31 @@ public class Role {
     private String title;
     private String description;
     private double salary;
-    private java.sql.Date creation_date = java.sql.Date.valueOf("1998-04-02");
+    private java.sql.Date creation_date;
+
+    public Role(String title, String description, double salary, Date creation_date) {
+        this.title = title;
+        this.description = description;
+        this.salary = salary;
+        this.creation_date = creation_date;
+    }
+
+    public Role(Integer role_id, String title) {
+        this.role_id = role_id;
+        this.title = title;
+    }
+
+    public Role(Integer role_id, String title, String description, double salary, Date creationDate) {
+        this.role_id = role_id;
+        this.title = title;
+        this.description = description;
+        this.salary = salary;
+        this.creation_date = creationDate;
+    }
 
 
     public Role(String title) {
         this.title = title;
-    }
-
-    public Role() {
-
     }
 
 
@@ -46,11 +63,7 @@ public class Role {
     }
 
 
-
-
-
-
-
-
-
+    public void setTitle(String title) {
+        this.title = title;
+    }
 }

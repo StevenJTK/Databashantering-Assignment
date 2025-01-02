@@ -4,6 +4,7 @@ package se.steven.database;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.sql.Date;
 
 public class WorkDAOImpl implements WorkDAO {
 
@@ -17,22 +18,19 @@ public class WorkDAOImpl implements WorkDAO {
             conn = JDBCUtil.getConnection();
             stmt = conn.createStatement();
 
-
             String sql = "INSERT INTO work_role (title, description, salary, creation_date) VALUES (?,?,?,?)";
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1, 1);
-            pstmt.setString(1,"Michael");
-            pstmt.setString(2,"Jackson");
-            pstmt.setDouble(3,500000.00);
-            pstmt.setDate(4, Date.valueOf("1985-1-17"));
+
+            pstmt.setString(1, role.getTitle());
+            pstmt.setString(2, role.getDescription());
+            pstmt.setDouble(3, role.getSalary());
+            pstmt.setDate(4, role.getCreation_date());
 
             pstmt.executeUpdate();
             pstmt.close();
             conn.commit();
 
-            String query = "SELECT * FROM work_role";
-            rs = stmt.executeQuery(query);
-            System.out.println("New role added.");
+            System.out.println("New role added!");
 
         }   catch (SQLException e) {
             e.printStackTrace();
@@ -46,9 +44,9 @@ public class WorkDAOImpl implements WorkDAO {
     }
 
     @Override
-    public List<String> fetchAllRoles() throws SQLException {
+    public List<Role> fetchAllRoles() throws SQLException {
 
-        List<String> roles = new ArrayList<String>();
+        List<Role> roles = new ArrayList<Role>();
 
         Connection conn = null;
         Statement stmt = null;
@@ -63,8 +61,8 @@ public class WorkDAOImpl implements WorkDAO {
 
 
             while (rs.next()) {
-                roles.add(rs.getString("title"));
-                System.out.println(rs.getString("title"));
+                Role role = new Role(rs.getString("title"));
+                roles.add(role);
             }
 
         }   catch (SQLException e) {
@@ -81,7 +79,7 @@ public class WorkDAOImpl implements WorkDAO {
 
 
     @Override
-    public Role fetchOneRole(int roleId) throws SQLException {
+    public Role fetchOneRole(int roleId) throws SQLException { // Only roleId?
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -90,15 +88,20 @@ public class WorkDAOImpl implements WorkDAO {
             conn = JDBCUtil.getConnection();
 
 
-            String sql = "SELECT title FROM work_role WHERE role_id=?";
+            String sql = "SELECT * FROM work_role WHERE role_id=?";
             pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, roleId);
 
             rs = pstmt.executeQuery();
             while (rs.next()) {
                 String title = rs.getString("title");
+                Integer role_id = rs.getInt("role_id");
+                String description = rs.getString("description");
+                double salary = rs.getDouble("salary");
+                Date creation_date = rs.getDate("creation_date");
+
                 System.out.println(title);
-                Role role = new Role(title);
+                Role role = new Role(role_id, title, description, salary, creation_date);
                 return role;
 
             }
@@ -116,8 +119,8 @@ public class WorkDAOImpl implements WorkDAO {
         return null;
     }
 
-    @Override
-    public void updateRole(int roleId) throws SQLException {
+
+    public void updateRole(Role role) throws SQLException {
 
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -130,32 +133,15 @@ public class WorkDAOImpl implements WorkDAO {
             String sql = "UPDATE work_role SET title = ?, description = ?, salary = ?, creation_date = ? WHERE role_id = ?";
 
             pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, "Taylor");
-            pstmt.setString(2, "Swift");
-            pstmt.setDouble(3, 50000000.00);
-            pstmt.setDate(4, Date.valueOf("1995-1-17"));
-            pstmt.setInt(5, roleId);
+            pstmt.setString(1, role.getTitle());
+            pstmt.setString(2, role.getDescription());
+            pstmt.setDouble(3, role.getSalary());
+            pstmt.setDate(4, role.getCreation_date());
+            pstmt.setInt(5, role.getRole_id());
 
             pstmt.executeUpdate();
-            pstmt.close();
             conn.commit();
 
-            String query = "SELECT * FROM work_role WHERE role_id=?";
-            pstmt = conn.prepareStatement(query);
-            pstmt.setInt(1, roleId);
-            rs = pstmt.executeQuery();
-
-            while(rs.next()) {
-                String title = rs.getString("title");
-                String description = rs.getString("description");
-                double salary = rs.getDouble("salary");
-                Date creationDate = rs.getDate("creation_date");
-
-                System.out.println(title);
-                System.out.println(description);
-                System.out.println(salary);
-                System.out.println(creationDate);
-            }
 
         }   catch (SQLException e) {
             e.printStackTrace();
